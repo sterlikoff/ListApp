@@ -25,6 +25,32 @@ public class ListViewActivity extends AppCompatActivity {
     BaseAdapter listContentAdapter;
     SwipeRefreshLayout swipeLayout;
     List<Map<String, String>> content = new ArrayList<>();
+    ArrayList<Integer> deletedIds = new ArrayList<>();
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+        deletedIds = savedInstanceState.getIntegerArrayList("deletedIds");
+
+        for (int i = 0; i < deletedIds.size();) {
+
+            content.remove(deletedIds.get(i).intValue());
+            listContentAdapter.notifyDataSetChanged();
+
+            i++;
+
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+
+        outState.putIntegerArrayList("deletedIds", deletedIds);
+        super.onSaveInstanceState(outState);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +71,8 @@ public class ListViewActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 content.remove(position);
+                deletedIds.add(position);
+
                 listContentAdapter.notifyDataSetChanged();
 
             }
