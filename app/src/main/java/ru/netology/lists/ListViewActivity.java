@@ -33,12 +33,14 @@ public class ListViewActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         deletedIds = savedInstanceState.getIntegerArrayList("deletedIds");
 
-        for (int i = 0; i < deletedIds.size();) {
+        if (deletedIds != null && deletedIds.size() > 0) {
 
-            content.remove(deletedIds.get(i).intValue());
-            listContentAdapter.notifyDataSetChanged();
+            for (int i = 0; i < deletedIds.size(); i++) {
 
-            i++;
+                content.remove(deletedIds.get(i).intValue());
+                listContentAdapter.notifyDataSetChanged();
+
+            }
 
         }
 
