@@ -36,11 +36,10 @@ public class ListViewActivity extends AppCompatActivity {
         if (deletedIds != null && deletedIds.size() > 0) {
 
             for (int i = 0; i < deletedIds.size(); i++) {
-
                 content.remove(deletedIds.get(i).intValue());
-                listContentAdapter.notifyDataSetChanged();
-
             }
+
+            listContentAdapter.notifyDataSetChanged();
 
         }
 
